@@ -94,5 +94,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(phrasesIntent);
             }
         });
+
+        TextView extra = (TextView) findViewById(R.id.extra);
+
+        extra.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent extraIntent = new Intent(MainActivity.this, ExtraActivity.class);
+
+                startActivity(extraIntent);
+            }
+        });
     }
 }
