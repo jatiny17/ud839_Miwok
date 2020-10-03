@@ -8,7 +8,6 @@ public class ExtraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.category_extra);
         setContentView(R.layout.activity_extra);
     }
 }
