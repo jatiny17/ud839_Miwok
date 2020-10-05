@@ -30,16 +30,16 @@ public class ColorsActivity extends AppCompatActivity {
 
         ArrayList<CustomWord> arrayList = new ArrayList<CustomWord>();
 
-        arrayList.add(new CustomWord("red", "weṭeṭṭi"));
-        arrayList.add(new CustomWord("mustard yellow", "chiwiiṭә"));
-        arrayList.add(new CustomWord("dusty yellow", "ṭopiisә"));
-        arrayList.add(new CustomWord("green", "chokokki"));
-        arrayList.add(new CustomWord("brown", "ṭakaakki"));
-        arrayList.add(new CustomWord("gray", "ṭopoppi"));
-        arrayList.add(new CustomWord("black", "kululli"));
-        arrayList.add(new CustomWord("white", "kelelli"));
+        arrayList.add(new CustomWord("red", "weṭeṭṭi",R.drawable.color_red));
+        arrayList.add(new CustomWord("mustard yellow", "chiwiiṭә",R.drawable.color_mustard_yellow));
+        arrayList.add(new CustomWord("dusty yellow", "ṭopiisә",R.drawable.color_dusty_yellow));
+        arrayList.add(new CustomWord("green", "chokokki",R.drawable.color_green));
+        arrayList.add(new CustomWord("brown", "ṭakaakki",R.drawable.color_brown));
+        arrayList.add(new CustomWord("gray", "ṭopoppi",R.drawable.color_gray));
+        arrayList.add(new CustomWord("black", "kululli",R.drawable.color_black));
+        arrayList.add(new CustomWord("white", "kelelli",R.drawable.color_white));
 
-        CustomWordAdapter customWordAdapter = new CustomWordAdapter(this, arrayList);
+        CustomWordAdapter customWordAdapter = new CustomWordAdapter(this, arrayList,R.color.category_colors);
         ListView listView = (ListView)findViewById(R.id.parentView);
 
         listView.setAdapter(customWordAdapter);

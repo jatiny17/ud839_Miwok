@@ -41,7 +41,7 @@ public class PhrasesActivity extends AppCompatActivity {
         arrayList.add(new CustomWord("Let’s go.", "yoowutis"));
         arrayList.add(new CustomWord("Come here.", "әnni'nem"));
 
-        CustomWordAdapter customWordAdapter = new CustomWordAdapter(this, arrayList);
+        CustomWordAdapter customWordAdapter = new CustomWordAdapter(this, arrayList,R.color.category_phrases);
         ListView listView = (ListView)findViewById(R.id.parentView);
 
         listView.setAdapter(customWordAdapter);

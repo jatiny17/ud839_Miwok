@@ -31,18 +31,18 @@ public class NumbersActivity extends AppCompatActivity {
 
         ArrayList<CustomWord> arrayList = new ArrayList<CustomWord>();
 
-        arrayList.add(new CustomWord("one", "lutti"));
-        arrayList.add(new CustomWord("two", "otiiko"));
-        arrayList.add(new CustomWord("three", "tolookosu"));
-        arrayList.add(new CustomWord("four", "oyyisa"));
-        arrayList.add(new CustomWord("five", "massokka"));
-        arrayList.add(new CustomWord("six", "temmokka"));
-        arrayList.add(new CustomWord("seven", "kenekaku"));
-        arrayList.add(new CustomWord("eight", "kawinta"));
-        arrayList.add(new CustomWord("nine", "wo’e"));
-        arrayList.add(new CustomWord("ten", "na’aacha"));
+        arrayList.add(new CustomWord("one", "lutti",R.drawable.number_one));
+        arrayList.add(new CustomWord("two", "otiiko",R.drawable.number_two));
+        arrayList.add(new CustomWord("three", "tolookosu",R.drawable.number_three));
+        arrayList.add(new CustomWord("four", "oyyisa",R.drawable.number_four));
+        arrayList.add(new CustomWord("five", "massokka",R.drawable.number_five));
+        arrayList.add(new CustomWord("six", "temmokka",R.drawable.number_six));
+        arrayList.add(new CustomWord("seven", "kenekaku",R.drawable.number_seven));
+        arrayList.add(new CustomWord("eight", "kawinta",R.drawable.number_eight));
+        arrayList.add(new CustomWord("nine", "wo’e",R.drawable.number_nine));
+        arrayList.add(new CustomWord("ten", "na’aacha",R.drawable.number_ten));
 
-        CustomWordAdapter customWordAdapter = new CustomWordAdapter(this, arrayList);
+        CustomWordAdapter customWordAdapter = new CustomWordAdapter(this, arrayList,R.color.category_numbers);
         ListView listView = (ListView)findViewById(R.id.parentView);
 
         listView.setAdapter(customWordAdapter);

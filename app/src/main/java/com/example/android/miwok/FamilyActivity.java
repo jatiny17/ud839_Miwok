@@ -30,18 +30,18 @@ public class FamilyActivity extends AppCompatActivity {
 
         ArrayList<CustomWord> arrayList = new ArrayList<CustomWord>();
 
-        arrayList.add(new CustomWord("father", "әpә"));
-        arrayList.add(new CustomWord("mother", "әṭa"));
-        arrayList.add(new CustomWord("son", "angsi"));
-        arrayList.add(new CustomWord("daughter", "tune"));
-        arrayList.add(new CustomWord("older brother", "taachi"));
-        arrayList.add(new CustomWord("younger brother", "chalitti"));
-        arrayList.add(new CustomWord("older sister", "teṭe"));
-        arrayList.add(new CustomWord("younger sister", "kolliti"));
-        arrayList.add(new CustomWord("grandmother", "ama"));
-        arrayList.add(new CustomWord("grandfather", "paapa"));
+        arrayList.add(new CustomWord("father", "әpә",R.drawable.family_father));
+        arrayList.add(new CustomWord("mother", "әṭa",R.drawable.family_mother));
+        arrayList.add(new CustomWord("son", "angsi",R.drawable.family_son));
+        arrayList.add(new CustomWord("daughter", "tune",R.drawable.family_daughter));
+        arrayList.add(new CustomWord("older brother", "taachi",R.drawable.family_older_brother));
+        arrayList.add(new CustomWord("younger brother", "chalitti",R.drawable.family_younger_brother));
+        arrayList.add(new CustomWord("older sister", "teṭe",R.drawable.family_older_sister));
+        arrayList.add(new CustomWord("younger sister", "kolliti",R.drawable.family_younger_sister));
+        arrayList.add(new CustomWord("grandmother", "ama",R.drawable.family_grandmother));
+        arrayList.add(new CustomWord("grandfather", "paapa",R.drawable.family_grandfather));
 
-        CustomWordAdapter customWordAdapter = new CustomWordAdapter(this, arrayList);
+        CustomWordAdapter customWordAdapter = new CustomWordAdapter(this, arrayList,R.color.category_family);
         ListView listView = (ListView)findViewById(R.id.parentView);
 
         listView.setAdapter(customWordAdapter);
