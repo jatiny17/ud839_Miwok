@@ -3,20 +3,21 @@ package com.example.android.miwok;
 public class CustomWord {
 
     private String englishTranslation, miwokTranslation;
-    private int imageId;
+    private int imageId ,audioId;
 
-    public CustomWord(String englishTranslation, String miwokTranslation) {
+    public CustomWord(String englishTranslation, String miwokTranslation, int audioId) {
         this.englishTranslation = englishTranslation;
         this.miwokTranslation = miwokTranslation;
-        imageId = 0;
+        this.audioId = audioId;
+        this.imageId = 0;
     }
 
-    public CustomWord(String englishTranslation, String miwokTranslation, int imageId) {
+    public CustomWord(String englishTranslation, String miwokTranslation, int imageId, int audioId) {
         this.englishTranslation = englishTranslation;
         this.miwokTranslation = miwokTranslation;
         this.imageId = imageId;
+        this.audioId = audioId;
     }
-
 
     public String getEnglishTranslation() {
         return englishTranslation;
@@ -40,6 +41,14 @@ public class CustomWord {
 
     public void setImageId(int imageId) {
         this.imageId = imageId;
+    }
+
+    public int getAudioId() {
+        return audioId;
+    }
+
+    public void setAudioId(int audioId) {
+        this.audioId = audioId;
     }
 
     public boolean isImage() {

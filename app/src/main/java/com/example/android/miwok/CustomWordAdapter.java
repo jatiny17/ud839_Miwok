@@ -2,6 +2,8 @@ package com.example.android.miwok;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -33,7 +36,7 @@ public class CustomWordAdapter extends ArrayAdapter<CustomWord> {
         if(listItem == null)
             listItem = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent,false);
 
-        CustomWord customWord = getItem(position);
+        final CustomWord customWord = getItem(position);
 
         TextView textView1 = (TextView)listItem.findViewById(R.id.list_item1);
         TextView textView2 = (TextView)listItem.findViewById(R.id.list_item2);
