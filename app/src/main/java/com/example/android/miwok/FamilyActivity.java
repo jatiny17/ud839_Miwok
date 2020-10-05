@@ -17,6 +17,9 @@ package com.example.android.miwok;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
 
@@ -24,5 +27,23 @@ public class FamilyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family);
+
+        ArrayList<CustomWord> arrayList = new ArrayList<CustomWord>();
+
+        arrayList.add(new CustomWord("father", "әpә"));
+        arrayList.add(new CustomWord("mother", "әṭa"));
+        arrayList.add(new CustomWord("son", "angsi"));
+        arrayList.add(new CustomWord("daughter", "tune"));
+        arrayList.add(new CustomWord("older brother", "taachi"));
+        arrayList.add(new CustomWord("younger brother", "chalitti"));
+        arrayList.add(new CustomWord("older sister", "teṭe"));
+        arrayList.add(new CustomWord("younger sister", "kolliti"));
+        arrayList.add(new CustomWord("grandmother", "ama"));
+        arrayList.add(new CustomWord("grandfather", "paapa"));
+
+        CustomWordAdapter customWordAdapter = new CustomWordAdapter(this, arrayList);
+        ListView listView = (ListView)findViewById(R.id.parentView);
+
+        listView.setAdapter(customWordAdapter);
     }
 }

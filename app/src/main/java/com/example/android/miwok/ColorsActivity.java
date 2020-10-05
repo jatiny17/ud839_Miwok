@@ -17,6 +17,9 @@ package com.example.android.miwok;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class ColorsActivity extends AppCompatActivity {
 
@@ -24,5 +27,21 @@ public class ColorsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colors);
+
+        ArrayList<CustomWord> arrayList = new ArrayList<CustomWord>();
+
+        arrayList.add(new CustomWord("red", "weṭeṭṭi"));
+        arrayList.add(new CustomWord("mustard yellow", "chiwiiṭә"));
+        arrayList.add(new CustomWord("dusty yellow", "ṭopiisә"));
+        arrayList.add(new CustomWord("green", "chokokki"));
+        arrayList.add(new CustomWord("brown", "ṭakaakki"));
+        arrayList.add(new CustomWord("gray", "ṭopoppi"));
+        arrayList.add(new CustomWord("black", "kululli"));
+        arrayList.add(new CustomWord("white", "kelelli"));
+
+        CustomWordAdapter customWordAdapter = new CustomWordAdapter(this, arrayList);
+        ListView listView = (ListView)findViewById(R.id.parentView);
+
+        listView.setAdapter(customWordAdapter);
     }
 }
