@@ -15,6 +15,7 @@
  */
 package com.example.android.miwok;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -29,11 +30,38 @@ import java.util.ArrayList;
 
 public class NumbersActivity extends AppCompatActivity {
 
-    MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
+    private AudioManager audioManager;
+
+    private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            switch(focusChange){
+                case AudioManager.AUDIOFOCUS_GAIN :{
+                    mediaPlayer.start();
+                }
+                break;
+
+                case AudioManager.AUDIOFOCUS_LOSS :{
+                    releaseMediaPlayer();
+                }
+                break;
+
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK :{
+                    mediaPlayer.pause();
+                    mediaPlayer.seekTo(0);
+                }
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_numbers);
+
+        audioManager = (AudioManager)getSystemService(AUDIO_SERVICE);
 
         final ArrayList<CustomWord> arrayList = new ArrayList<CustomWord>();
 
@@ -57,23 +85,22 @@ public class NumbersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if(mediaPlayer!=null)
-                    mediaPlayer.release();
+                releaseMediaPlayer();
 
-                mediaPlayer = null;
+                int status = audioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
-                mediaPlayer = MediaPlayer.create(NumbersActivity.this, arrayList.get(i).getAudioId());
-                mediaPlayer.start();
+                if(status == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        if(mediaPlayer!=null)
-                            mediaPlayer.release();
+                    mediaPlayer = MediaPlayer.create(NumbersActivity.this, arrayList.get(i).getAudioId());
+                    mediaPlayer.start();
 
-                        mediaPlayer=null;
-                    }
-                });
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            releaseMediaPlayer();
+                        }
+                    });
+                }
             }
         });
     }
@@ -81,9 +108,15 @@ public class NumbersActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        releaseMediaPlayer();
+    }
+
+    private void releaseMediaPlayer() {
         if(mediaPlayer!=null)
-        mediaPlayer.release();
+            mediaPlayer.release();
 
         mediaPlayer = null;
+
+        audioManager.abandonAudioFocus(onAudioFocusChangeListener);
     }
 }

@@ -30,14 +30,41 @@ import java.util.ArrayList;
 
 public class ColorsActivity extends AppCompatActivity {
 
-    MediaPlayer mediaPlayer;
-    AudioManager audioManager;
+    private MediaPlayer mediaPlayer;
+    private AudioManager audioManager;
+
+    private AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+
+            switch(focusChange){
+                case AudioManager.AUDIOFOCUS_GAIN : {
+                    mediaPlayer.start();
+                }
+                break;
+
+                case AudioManager.AUDIOFOCUS_LOSS:{
+                    releaseMediaPlayer();
+                }
+                break;
+
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:{
+                    mediaPlayer.pause();
+                    mediaPlayer.seekTo(0);
+                }
+            }
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colors);
 
         final ArrayList<CustomWord> arrayList = new ArrayList<CustomWord>();
+        audioManager = (AudioManager)getSystemService(AUDIO_SERVICE);
 
         arrayList.add(new CustomWord("red", "weṭeṭṭi",R.drawable.color_red, R.raw.color_red));
         arrayList.add(new CustomWord("mustard yellow", "chiwiiṭә",R.drawable.color_mustard_yellow,R.raw.color_mustard_yellow));
@@ -56,23 +83,22 @@ public class ColorsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(mediaPlayer!=null)
-                    mediaPlayer.release();
 
-                mediaPlayer = null;
+                releaseMediaPlayer();
+                int status = audioManager.requestAudioFocus(audioFocusChangeListener,AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
-                mediaPlayer = MediaPlayer.create(ColorsActivity.this, arrayList.get(i).getAudioId());
-                mediaPlayer.start();
+                if(status == AudioManager.AUDIOFOCUS_REQUEST_GRANTED)
+                {
+                    mediaPlayer = MediaPlayer.create(ColorsActivity.this, arrayList.get(i).getAudioId());
+                    mediaPlayer.start();
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        if(mediaPlayer!=null)
-                            mediaPlayer.release();
-
-                        mediaPlayer=null;
-                    }
-                });
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            releaseMediaPlayer();
+                        }
+                    });
+                }
             }
         });
     }
@@ -80,9 +106,14 @@ public class ColorsActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        releaseMediaPlayer();
+    }
+
+    private void releaseMediaPlayer() {
         if(mediaPlayer!=null)
             mediaPlayer.release();
 
         mediaPlayer = null;
+        audioManager.abandonAudioFocus(audioFocusChangeListener);
     }
 }
